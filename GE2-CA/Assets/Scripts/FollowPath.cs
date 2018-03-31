@@ -6,7 +6,7 @@ using UnityEngine;
 public class FollowPath : SteeringBehaviour {
 
     public Path path;
-
+	//path = getcomponentpath findcompnent path1
     Vector3 nextWaypoint;
 
     public void OnDrawGizmos()
@@ -33,7 +33,7 @@ public class FollowPath : SteeringBehaviour {
 
         if (!path.looped && path.IsLast())
         {
-            return boid.ArriveForce(nextWaypoint, 20);
+            return boid.ArriveForce(nextWaypoint);
         }
         else
         {

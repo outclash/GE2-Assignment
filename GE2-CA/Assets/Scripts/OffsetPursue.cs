@@ -21,7 +21,12 @@ public class OffsetPursue : SteeringBehaviour {
 
     void Start () {
         offset = transform.position - leader.transform.position;
-        offset = Quaternion.Inverse(leader.transform.rotation) * offset;
+//		Debug.Log (transform.position);
+//		Debug.Log (leader.transform.position);
+//		Debug.Log (offset);
+       // offset = Quaternion.Inverse(leader.transform.rotation) * offset;
+//		Debug.Log (offset);
+//		Debug.Log (Quaternion.Inverse(leader.transform.rotation));
     }
 
     // Update is called once per frame
@@ -31,13 +36,15 @@ public class OffsetPursue : SteeringBehaviour {
 
     public override Vector3 Calculate()
     {
-        worldtarget = leader.transform.TransformPoint(offset);
+		worldtarget = leader.transform.position+offset;
+//		Debug.Log (worldtarget);
         float dist = Vector3.Distance(worldtarget
             , transform.position);
         float time = dist / boid.maxSpeed;
 
         Vector3 targetPos = worldtarget + (leader.velocity * time);
-        return boid.ArriveForce(targetPos, 10);
+//		Debug.Log (targetPos);
+        return boid.ArriveForce(targetPos);
 
     }
 }

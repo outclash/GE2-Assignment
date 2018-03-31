@@ -117,7 +117,7 @@ public class ObstacleAvoidance : SteeringBehaviour
     {
         Vector3 force = Vector3.zero;
 
-        Vector3 fromTarget = fromTarget = transform.position - info.point;
+        Vector3 fromTarget = transform.position - info.point;
         float dist = Vector3.Distance(transform.position, info.point);
 
         switch (forceType)
