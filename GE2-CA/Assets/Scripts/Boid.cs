@@ -31,7 +31,7 @@ public class Boid : MonoBehaviour
 		return desired - velocity;
 	}
 
-	public Vector3 ArriveForce (Vector3 target, float slowingDistance = 10.0f, float deceleration = 5.0f)
+	public Vector3 ArriveForce (Vector3 target, float slowingDistance = 50.0f, float deceleration = 1.0f)
 	{
 		Vector3 toTarget = target - transform.position;
 

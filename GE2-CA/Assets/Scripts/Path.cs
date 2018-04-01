@@ -5,7 +5,7 @@ using UnityEngine;
 public class Path : MonoBehaviour {
 
 	public List<Vector3> waypoints = new List<Vector3>();
-	public GameObject target;
+	public GameObject mothership;
 
 	public int next = 0;
 	public bool looped = true;
@@ -29,7 +29,7 @@ public class Path : MonoBehaviour {
 	void Start () {
 		waypoints.Clear();
 		count = 10;
-		range = target.GetComponent<Collider>().bounds.size;
+		range = mothership.GetComponent<Collider>().bounds.size;
 		//Debug.Log (range);
 		for (int i = 0; i < count; i++)
 		{
@@ -38,7 +38,7 @@ public class Path : MonoBehaviour {
 			offset.y = offset.y * range.y;
 			offset.z = offset.z * range.z;
 			//Debug.Log (offset);
-			waypoints.Add(target.transform.position + offset);
+			waypoints.Add(mothership.transform.position + offset);
 		}
 	}
 
