@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class FollowPath : SteeringBehaviour {
 
-    public Path path;
-	//path = getcomponentpath findcompnent path1
+    public Path path = null;
     Vector3 nextWaypoint;
 
     public void OnDrawGizmos()

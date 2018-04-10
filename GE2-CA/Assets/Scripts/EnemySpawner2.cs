@@ -2,25 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour {
+public class EnemySpawner2 : MonoBehaviour {
 
 	public float leaders = 3;
 	public float gapL = 10;
 	public float gap = 10;
 	public float followers = 1;
 	public GameObject prefab;
-	//public GameObject mothership;
-	//private Vector3 mshipsize;
 
 	private void Start ()
 	{
-		//mothership = GameObject.Find ("Mothership");
-	//	mshipsize = GetComponent<Collider> ().bounds.size;
 		for (int i = 1; i <= leaders; i++) {
-			Vector3 rndPos = new Vector3 (Random.Range ((-leaders * gapL), (leaders * gapL)),0, Random.Range ((-leaders * gapL), (leaders * gapL)));
+			Vector3 rndPos = new Vector3 (Random.Range ((-leaders * gapL), (leaders * gapL)),Random.Range ((-leaders * gapL), (leaders * gapL)), Random.Range ((-leaders * gapL), (leaders * gapL)));
 			CreateLeaders (rndPos);
 		}
-
 	}
 
 	void CreateLeaders (Vector3 newpos)
@@ -30,18 +25,11 @@ public class EnemySpawner : MonoBehaviour {
 		leader.transform.position = this.transform.TransformPoint (newpos);
 		leader.transform.rotation = this.transform.rotation;
 
-		//add components path,pathfollow,seek,arrive,obsavoidance,
-		Wander w = leader.AddComponent<Wander>();
-		//Arrive arive = leader.AddComponent<Arrive> ();
-		//arive.targetPosition = leader.transform.position + leader.transform.forward * 100;
+
 		Seek seek = leader.AddComponent<Seek> ();
 		seek.enabled = !seek.enabled;
-		//Path path = leader.AddComponent<Path> ();
-		//path.mothership = mothership;
-		//FollowPath fpath = leader.AddComponent<FollowPath> ();
-		//fpath.path = path;
-		//fpath.enabled = !fpath.enabled;
-		ObstacleAvoidance obavd = leader.AddComponent<ObstacleAvoidance> ();
+		Boid b = leader.GetComponent<Boid> ();
+		b.maxSpeed = 5;
 
 
 		for (int i = 1; i <= followers; i++) {
@@ -63,8 +51,8 @@ public class EnemySpawner : MonoBehaviour {
 		op.leader = leader;
 		Seek seek = follower.AddComponent<Seek> ();
 		seek.enabled = !seek.enabled;
-
-		ObstacleAvoidance obavd = follower.AddComponent<ObstacleAvoidance> ();
+		Boid b = follower.GetComponent<Boid> ();
+		b.maxSpeed = 5;
 
 	}
 		

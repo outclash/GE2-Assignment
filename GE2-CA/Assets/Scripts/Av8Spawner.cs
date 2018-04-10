@@ -9,6 +9,7 @@ public class Av8Spawner : MonoBehaviour
 	public float gap = 5;
 	public float followers = 1;
 	public GameObject prefab;
+	public GameObject krprefab;
 	public GameObject mothership;
 	private Vector3 mshipsize;
 
@@ -20,7 +21,20 @@ public class Av8Spawner : MonoBehaviour
 			Vector3 rndPos = new Vector3 (Random.Range ((-leaders * gapL), (leaders * gapL)), Random.Range ((-leaders * gapL), (leaders * gapL)), 0);
 			CreateLeaders (rndPos);
 		}
-		//Debug.Log (av8s.Count);
+
+		//Create K.Russel plane
+		GameObject leader = GameObject.Instantiate<GameObject> (krprefab);
+		leader.transform.position = this.transform.TransformPoint (new Vector3(0,-50,0));
+		leader.transform.rotation = this.transform.rotation;
+
+		//add components path,pathfollow,obsavoidance,
+		Path path = leader.AddComponent<Path> ();
+		path.isRandom = false;
+		FollowPath fpath = leader.AddComponent<FollowPath> ();
+		fpath.path = path;
+		fpath.enabled = fpath.enabled;
+		ObstacleAvoidance obavd = leader.AddComponent<ObstacleAvoidance> ();
+
 //		float thetaInc = (Mathf.PI * 2) / leaders;
 //		for (int i = 1; i <= leaders; i++) {
 //
