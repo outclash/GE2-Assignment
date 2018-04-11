@@ -36,8 +36,10 @@ public class AIcontrol : MonoBehaviour
 	{
 		for (int i = 0; i < av8s.Count; i++) {
 			for (int j = 0; j < 3; j++) { //fire first 3 missilbe of each av8
-				av8s [i].transform.Find ("Body/Bombs").GetChild (j).gameObject.GetComponent<Seek> ().enabled = enabled;
+				av8s [i].transform.Find ("Bombs").GetChild (j).gameObject.GetComponent<Seek> ().enabled = enabled;
 				yield return new WaitForSeconds (1);
+				av8s [i].transform.Find ("Bombs").GetChild (j).gameObject.GetComponent<Rigidbody> ().isKinematic = false;
+
 			}
 		}
 		Debug.Log ("Missiles Fired!");

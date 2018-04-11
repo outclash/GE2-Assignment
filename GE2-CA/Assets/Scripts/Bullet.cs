@@ -21,4 +21,5 @@ public class Bullet : MonoBehaviour
 	{
 		transform.Translate (0, 0, speed * Time.deltaTime);
 	}
+		
 }

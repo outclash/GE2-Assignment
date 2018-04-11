@@ -15,15 +15,30 @@ public class Path : MonoBehaviour
 
 	public void OnDrawGizmos ()
 	{
-		int count = looped ? (waypoints.Count + 1) : waypoints.Count;
-		Gizmos.color = Color.red;
-		for (int i = 1; i < count; i++) {
-			Vector3 prev = waypoints [i - 1];
-			Vector3 next = waypoints [i % waypoints.Count];
-			Gizmos.DrawLine (prev, next);
-			Gizmos.DrawSphere (prev, 1);
-			Gizmos.DrawSphere (next, 1);
+		int count;
+		if (isRandom) {
+			count = looped ? (waypoints.Count + 1) : waypoints.Count;
+			Gizmos.color = Color.red;
+			for (int i = 1; i < count; i++) {
+				Vector3 prev = waypoints [i - 1];
+				Vector3 next = waypoints [i % waypoints.Count];
+				Gizmos.DrawLine (prev, next);
+				Gizmos.DrawSphere (prev, 1);
+				Gizmos.DrawSphere (next, 1);
+			}
+		} else {
+			count = looped ? (transform.childCount + 1) : transform.childCount;
+			Gizmos.color = Color.cyan;
+			for (int i = 1; i < count; i++)
+			{
+				Transform prev = transform.GetChild(i - 1);
+				Transform next = transform.GetChild(i % transform.childCount);
+				Gizmos.DrawLine(prev.transform.position, next.transform.position);
+				Gizmos.DrawSphere(prev.position, 1);
+				Gizmos.DrawSphere(next.position, 1);
+			}
 		}
+
 	}
 
 	// Use this for initialization
@@ -41,12 +56,16 @@ public class Path : MonoBehaviour
 				waypoints.Add (mothership.transform.position + offset);
 			}
 		} else {
-			//add K.Russel path
-			waypoints.Add (new Vector3 (300, 50, 0));
-			waypoints.Add (new Vector3 (100, 50, 0));
-			waypoints.Add (new Vector3 (0, 50, 0));
-			waypoints.Add (new Vector3 (-80, 50, 0));
-			waypoints.Add (new Vector3 (-100, 75, 0));
+			//add path from gameobject
+			int count = transform.childCount;
+			for (int i = 0; i < count; i++) {
+				waypoints.Add (transform.GetChild (i).position);
+			}
+//			waypoints.Add (new Vector3 (300, 50, 0));
+//			waypoints.Add (new Vector3 (100, 50, 0));
+//			waypoints.Add (new Vector3 (0, 50, 0));
+//			waypoints.Add (new Vector3 (-80, 50, 0));
+//			waypoints.Add (new Vector3 (-100, 75, 0));
 		}
 	}
 

@@ -89,4 +89,38 @@ public class Boid : MonoBehaviour
 		}
 		transform.position += velocity * Time.deltaTime;        
 	}
+		
+	public void ExplodeMyParts()
+	{
+		foreach (Transform t in this.GetComponentsInChildren<Transform>())
+		{
+			Rigidbody rb = t.gameObject.GetComponent<Rigidbody>();
+			if (rb == null)
+			{
+				rb = t.gameObject.AddComponent<Rigidbody>();
+			}
+			rb.useGravity = true;
+			rb.isKinematic = false;
+			Vector3 v = new Vector3(
+				Random.Range(-5, 5)
+				, Random.Range(5, 10)
+				, Random.Range(-5, 5)
+			);
+			rb.velocity = v;
+		}
+		Destroy(this.gameObject, 7);
+	}
+
+	void OnCollisionEnter (Collision other)
+	{
+
+		if (other.gameObject.CompareTag("EnemyBullet") && this.gameObject.CompareTag ("Av8s")) {
+			Debug.Log ("hitting");
+			ExplodeMyParts ();
+		}
+		if (this.gameObject.CompareTag("Missiles") && other.gameObject.CompareTag("Mothership")) {
+			Debug.Log ("explode");
+			Destroy(this.gameObject);		
+		}
+	}
 }

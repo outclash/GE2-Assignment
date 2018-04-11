@@ -28,10 +28,10 @@ public class Av8Spawner : MonoBehaviour
 		leader.transform.rotation = this.transform.rotation;
 
 		//add components path,pathfollow,obsavoidance,
-		Path path = leader.AddComponent<Path> ();
-		path.isRandom = false;
+		//Path path = leader.AddComponent<Path> ();
+		//path.isRandom = false;
 		FollowPath fpath = leader.AddComponent<FollowPath> ();
-		fpath.path = path;
+		fpath.path = GameObject.Find("KRpath").GetComponent<Path>();
 		fpath.enabled = fpath.enabled;
 		ObstacleAvoidance obavd = leader.AddComponent<ObstacleAvoidance> ();
 
@@ -72,11 +72,11 @@ public class Av8Spawner : MonoBehaviour
 		//	ObstacleAvoidance obavd = leader.AddComponent<ObstacleAvoidance> ();
 
 		//Add boid and seek to the  bombs(missiles)
-		int count = leader.transform.Find ("Body/Bombs").gameObject.transform.childCount;
+		int count = leader.transform.Find ("Bombs").gameObject.transform.childCount;
 		for (int i = 0; i < count; i++) {
-			Boid b = leader.transform.Find ("Body/Bombs").GetChild (i).gameObject.AddComponent<Boid> ();
+			Boid b = leader.transform.Find ("Bombs").GetChild (i).gameObject.AddComponent<Boid> ();
 			b.maxSpeed = 20f;
-			Seek sb = leader.transform.Find ("Body/Bombs").GetChild (i).gameObject.AddComponent<Seek> ();
+			Seek sb = leader.transform.Find ("Bombs").GetChild (i).gameObject.AddComponent<Seek> ();
 			sb.target = RandomTarget ();
 			sb.enabled = !sb.enabled;
 		}
@@ -109,11 +109,11 @@ public class Av8Spawner : MonoBehaviour
 		//	ObstacleAvoidance obavd = leader.AddComponent<ObstacleAvoidance> ();
 
 		//Add boid and seek to the  bombs(missiles)
-		int count = follower.transform.Find ("Body/Bombs").gameObject.transform.childCount;
+		int count = follower.transform.Find ("Bombs").gameObject.transform.childCount;
 		for (int i = 0; i < count; i++) {
-			Boid b = follower.transform.Find ("Body/Bombs").GetChild (i).gameObject.AddComponent<Boid> ();
+			Boid b = follower.transform.Find ("Bombs").GetChild (i).gameObject.AddComponent<Boid> ();
 			b.maxSpeed = 20f;
-			Seek sb = follower.transform.Find ("Body/Bombs").GetChild (i).gameObject.AddComponent<Seek> ();
+			Seek sb = follower.transform.Find ("Bombs").GetChild (i).gameObject.AddComponent<Seek> ();
 			sb.target = RandomTarget ();
 			sb.enabled = !sb.enabled;
 		}
