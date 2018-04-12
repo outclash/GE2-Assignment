@@ -59,8 +59,9 @@ public class EnemySpawner : MonoBehaviour {
 		follower.transform.parent = this.transform;
 		follower.transform.rotation = this.transform.rotation;
 
-		OffsetPursue op = follower.AddComponent<OffsetPursue> ();
-		op.leader = leader;
+		Wander w = follower.AddComponent<Wander>();
+		//OffsetPursue op = follower.AddComponent<OffsetPursue> ();
+		//op.leader = leader;
 		Seek seek = follower.AddComponent<Seek> ();
 		seek.enabled = !seek.enabled;
 

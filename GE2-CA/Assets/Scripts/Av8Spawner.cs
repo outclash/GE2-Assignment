@@ -69,7 +69,8 @@ public class Av8Spawner : MonoBehaviour
 		FollowPath fpath = leader.AddComponent<FollowPath> ();
 		fpath.path = path;
 		fpath.enabled = !fpath.enabled;
-		//	ObstacleAvoidance obavd = leader.AddComponent<ObstacleAvoidance> ();
+		ObstacleAvoidance obavd = leader.AddComponent<ObstacleAvoidance> ();
+		obavd.enabled = !obavd.enabled;
 
 		//Add boid and seek to the  bombs(missiles)
 		int count = leader.transform.Find ("Bombs").gameObject.transform.childCount;
@@ -96,6 +97,7 @@ public class Av8Spawner : MonoBehaviour
 		follower.transform.position = leader.transform.TransformPoint (offset);
 		follower.transform.parent = this.transform;
 		follower.transform.rotation = this.transform.rotation;
+		follower.name = "follower";
 
 		OffsetPursue op = follower.AddComponent<OffsetPursue> ();
 		op.leader = leader;
@@ -106,7 +108,8 @@ public class Av8Spawner : MonoBehaviour
 		FollowPath fpath = follower.AddComponent<FollowPath> ();
 		fpath.path = path;
 		fpath.enabled = !fpath.enabled;
-		//	ObstacleAvoidance obavd = leader.AddComponent<ObstacleAvoidance> ();
+		ObstacleAvoidance obavd = follower.AddComponent<ObstacleAvoidance> ();
+		obavd.enabled = !obavd.enabled;
 
 		//Add boid and seek to the  bombs(missiles)
 		int count = follower.transform.Find ("Bombs").gameObject.transform.childCount;

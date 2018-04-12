@@ -115,11 +115,15 @@ public class Boid : MonoBehaviour
 	{
 
 		if (other.gameObject.CompareTag("EnemyBullet") && this.gameObject.CompareTag ("Av8s")) {
-			Debug.Log ("hitting");
+			Debug.Log ("hit av8");
 			ExplodeMyParts ();
 		}
 		if (this.gameObject.CompareTag("Missiles") && other.gameObject.CompareTag("Mothership")) {
 			Debug.Log ("explode");
+			Destroy(this.gameObject);		
+		}
+		if (this.gameObject.CompareTag("Missiles") && other.gameObject.CompareTag("Enemy")) {
+			Debug.Log ("hit enemy");
 			Destroy(this.gameObject);		
 		}
 	}
