@@ -8,6 +8,7 @@ public class FightScene : MonoBehaviour
 	public GameObject fsSpwn;
 	public GameObject av8prefab;
 	public GameObject enemyprefab;
+	public GameObject expPrefab;
 	private List<Path> paths = new List<Path> ();
 	private List<GameObject> eships = new List<GameObject> ();
 	private List<GameObject> av8ships = new List<GameObject> ();
@@ -48,7 +49,8 @@ public class FightScene : MonoBehaviour
 		int count = leader.transform.Find ("Bombs").gameObject.transform.childCount;
 		for (int i = 0; i < count; i++) {
 			Boid b = leader.transform.Find ("Bombs").GetChild (i).gameObject.AddComponent<Boid> ();
-			b.maxSpeed = 40f;
+			b.maxSpeed = 45f;
+			b.explosionPrefab = expPrefab;
 			Pursue sb = leader.transform.Find ("Bombs").GetChild (i).gameObject.AddComponent<Pursue> ();
 			sb.target = eships [0].GetComponent<Boid> ();
 			sb.enabled = !sb.enabled;
@@ -80,12 +82,11 @@ public class FightScene : MonoBehaviour
 		yield break;
 	}
 
-	public IEnumerator Av8Kill ()
+	public IEnumerator Av8Kill ()//first plane shoot enemy
 	{
-		yield return new WaitForSeconds (2);
-		//first plane shoot enemy
+		yield return new WaitForSeconds (1);
 		av8ships [1].GetComponent<FollowPath> ().enabled = enabled;
-		yield return new WaitForSeconds (2);
+		yield return new WaitForSeconds (1.7f);
 		eships [1].GetComponent<FireBullets> ().Fire();
 		yield break;
 	}

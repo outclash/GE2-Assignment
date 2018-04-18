@@ -71,16 +71,17 @@ public class AIcontrol : MonoBehaviour
 	public IEnumerator FireMissiles ()
 	{
 		yield return new WaitForSeconds (10);
+		StartCoroutine (Pathfollow ());
+
 		for (int i = 0; i < av8s.Count; i++) {
-			for (int j = 0; j < 3; j++) { //fire first 3 missilbe of each av8
+			for (int j = 0; j < av8s [i].transform.Find ("Bombs").transform.childCount; j++) { //fire first 2 missilbe of each av8
 				av8s [i].transform.Find ("Bombs").GetChild (j).gameObject.GetComponent<Seek> ().enabled = enabled;
-				yield return new WaitForSeconds (1);
+				yield return new WaitForSeconds (0.3f);
 				av8s [i].transform.Find ("Bombs").GetChild (j).gameObject.GetComponent<Rigidbody> ().isKinematic = false;
 
 			}
 		}
 		Debug.Log ("Missiles Fired!");
-		StartCoroutine (Pathfollow ());
 		yield break;
 	}
 
@@ -88,6 +89,7 @@ public class AIcontrol : MonoBehaviour
 	//Change enemies behavior to seek each av8s
 	public IEnumerator Pathfollow ()
 	{
+		yield return new WaitForSeconds (5);
 		camCon.nextCam (); //goes to the next camera view
 		yield return new WaitForSeconds (10);
 		camsBehavior [1].option = 1;
@@ -116,6 +118,9 @@ public class AIcontrol : MonoBehaviour
 			enemies[i].GetComponent<FireBullets>().Startfiring();
 		}
 		yield return new WaitForSeconds (3);
+		camCon.prevCam ();
+		yield return new WaitForSeconds (5);
+		camCon.nextCam ();
 		StartCoroutine (StartFightScene ());
 		yield break;
 	}

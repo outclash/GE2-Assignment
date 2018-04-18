@@ -12,6 +12,7 @@ public class Boid : MonoBehaviour
 	public float mass = 1;
 	public float maxSpeed = 5.0f;
     
+	public GameObject explosionPrefab = null;
 	// Use this for initialization
 	void Start ()
 	{
@@ -108,7 +109,7 @@ public class Boid : MonoBehaviour
 			);
 			rb.velocity = v;
 		}
-		Destroy(this.gameObject, 7);
+		Destroy(this.gameObject, 5);
 	}
 
 	void OnCollisionEnter (Collision other)
@@ -117,16 +118,24 @@ public class Boid : MonoBehaviour
 		if (other.gameObject.CompareTag("EnemyBullet") && this.gameObject.CompareTag ("Av8s")) {
 			Debug.Log ("hit av8");
 			ExplodeMyParts ();
+			//add explosion fx
+			GameObject go = Instantiate(explosionPrefab,this.gameObject.transform.position,Quaternion.identity);
+			go.transform.localScale = new Vector3 (1, 1, 1);
+			Destroy (go, 3);
 		}
 		if (this.gameObject.CompareTag("Missiles") && other.gameObject.CompareTag("Mothership")) {
 			Debug.Log ("explode");
 			//add explosion fx
-			Destroy(this.gameObject);		
+			GameObject go = Instantiate(explosionPrefab,this.gameObject.transform.position,Quaternion.identity);
+			Destroy(this.gameObject);
+			Destroy (go, 3);
 		}
 		if (this.gameObject.CompareTag("Missiles") && other.gameObject.CompareTag("Enemy")) {
 			Debug.Log ("hit enemy");
-			//add explo
-			Destroy(this.gameObject);		
+			//add explosion fx
+			GameObject go = Instantiate(explosionPrefab,this.gameObject.transform.position,Quaternion.identity);
+			Destroy(this.gameObject);
+			Destroy (go, 3);
 		}
 	}
 }

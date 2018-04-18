@@ -11,6 +11,7 @@ public class Av8Spawner : MonoBehaviour
 	public GameObject prefab;
 	public GameObject krprefab;
 	public GameObject mothership;
+	public GameObject expPrefab; //explosion prefab place on boid of missiles
 	private Vector3 mshipsize;
 	//Could create the list here and use at the AI script aswell
 
@@ -78,7 +79,8 @@ public class Av8Spawner : MonoBehaviour
 		int count = leader.transform.Find ("Bombs").gameObject.transform.childCount;
 		for (int i = 0; i < count; i++) {
 			Boid b = leader.transform.Find ("Bombs").GetChild (i).gameObject.AddComponent<Boid> ();
-			b.maxSpeed = 20f;
+			b.maxSpeed = 25f;
+			b.explosionPrefab = expPrefab;
 			Seek sb = leader.transform.Find ("Bombs").GetChild (i).gameObject.AddComponent<Seek> ();
 			sb.target = RandomTarget ();
 			sb.enabled = !sb.enabled;
@@ -117,7 +119,8 @@ public class Av8Spawner : MonoBehaviour
 		int count = follower.transform.Find ("Bombs").gameObject.transform.childCount;
 		for (int i = 0; i < count; i++) {
 			Boid b = follower.transform.Find ("Bombs").GetChild (i).gameObject.AddComponent<Boid> ();
-			b.maxSpeed = 20f;
+			b.maxSpeed = 25f;
+			b.explosionPrefab = expPrefab;
 			Seek sb = follower.transform.Find ("Bombs").GetChild (i).gameObject.AddComponent<Seek> ();
 			sb.target = RandomTarget ();
 			sb.enabled = !sb.enabled;
