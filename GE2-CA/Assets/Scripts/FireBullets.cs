@@ -8,17 +8,17 @@ public class FireBullets : MonoBehaviour
 	public GameObject bulletSpawnPoint;
 	public GameObject bulletPrefab;
 
-	void Start ()
-	{
-		
+	public void Startfiring(){
+		StartCoroutine (TimedFiring ());
 	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
 		
+	public IEnumerator TimedFiring ()
+	{
+		while (true) {
+			Fire ();
+			yield return new WaitForSeconds (3);
+		}
 	}
-
 	public void Fire ()
 	{
 		GameObject bullet = GameObject.Instantiate<GameObject> (bulletPrefab);

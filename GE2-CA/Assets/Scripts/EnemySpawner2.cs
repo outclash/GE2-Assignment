@@ -10,7 +10,7 @@ public class EnemySpawner2 : MonoBehaviour {
 	public float followers = 1;
 	public GameObject prefab;
 
-	private void Start ()
+	private void Awake ()
 	{
 		for (int i = 1; i <= leaders; i++) {
 			Vector3 rndPos = new Vector3 (Random.Range ((-leaders * gapL), (leaders * gapL)),Random.Range ((-leaders * gapL), (leaders * gapL)), Random.Range ((-leaders * gapL), (leaders * gapL)));

@@ -120,10 +120,12 @@ public class Boid : MonoBehaviour
 		}
 		if (this.gameObject.CompareTag("Missiles") && other.gameObject.CompareTag("Mothership")) {
 			Debug.Log ("explode");
+			//add explosion fx
 			Destroy(this.gameObject);		
 		}
 		if (this.gameObject.CompareTag("Missiles") && other.gameObject.CompareTag("Enemy")) {
 			Debug.Log ("hit enemy");
+			//add explo
 			Destroy(this.gameObject);		
 		}
 	}

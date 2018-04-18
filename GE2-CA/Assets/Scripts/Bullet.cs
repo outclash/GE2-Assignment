@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		Invoke ("KillMe", 5);
+		Invoke ("KillMe", 3);
 	}
 
 	void KillMe ()

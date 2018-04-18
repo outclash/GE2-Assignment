@@ -11,8 +11,8 @@ public class EnemySpawner : MonoBehaviour {
 	public GameObject prefab;
 	//public GameObject mothership;
 	//private Vector3 mshipsize;
-
-	private void Start ()
+	//Could create the list here and use at the AI script aswell
+	private void Awake ()
 	{
 		//mothership = GameObject.Find ("Mothership");
 	//	mshipsize = GetComponent<Collider> ().bounds.size;
@@ -31,7 +31,7 @@ public class EnemySpawner : MonoBehaviour {
 		leader.transform.rotation = this.transform.rotation;
 
 		//add components path,pathfollow,seek,arrive,obsavoidance,
-		Wander w = leader.AddComponent<Wander>();
+		//Wander w = leader.AddComponent<Wander>();
 		//Arrive arive = leader.AddComponent<Arrive> ();
 		//arive.targetPosition = leader.transform.position + leader.transform.forward * 100;
 		Seek seek = leader.AddComponent<Seek> ();
@@ -59,7 +59,7 @@ public class EnemySpawner : MonoBehaviour {
 		follower.transform.parent = this.transform;
 		follower.transform.rotation = this.transform.rotation;
 
-		Wander w = follower.AddComponent<Wander>();
+		//Wander w = follower.AddComponent<Wander>();
 		//OffsetPursue op = follower.AddComponent<OffsetPursue> ();
 		//op.leader = leader;
 		Seek seek = follower.AddComponent<Seek> ();

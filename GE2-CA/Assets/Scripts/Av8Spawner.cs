@@ -12,8 +12,9 @@ public class Av8Spawner : MonoBehaviour
 	public GameObject krprefab;
 	public GameObject mothership;
 	private Vector3 mshipsize;
+	//Could create the list here and use at the AI script aswell
 
-	private void Start ()
+	private void Awake ()
 	{
 		mothership = GameObject.Find ("Mothership");
 		mshipsize = mothership.GetComponent<Collider> ().bounds.size;
@@ -34,6 +35,7 @@ public class Av8Spawner : MonoBehaviour
 		fpath.path = GameObject.Find("KRpath").GetComponent<Path>();
 		fpath.enabled = fpath.enabled;
 		ObstacleAvoidance obavd = leader.AddComponent<ObstacleAvoidance> ();
+		leader.GetComponent<Boid> ().maxSpeed = 30;
 
 //		float thetaInc = (Mathf.PI * 2) / leaders;
 //		for (int i = 1; i <= leaders; i++) {
