@@ -12,6 +12,7 @@ public class FireBullets : MonoBehaviour
 		StartCoroutine (TimedFiring ());
 	}
 		
+	//Make bullet automatically fire every 3 seconds
 	public IEnumerator TimedFiring ()
 	{
 		while (true) {

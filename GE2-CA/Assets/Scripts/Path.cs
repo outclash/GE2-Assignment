@@ -6,12 +6,10 @@ public class Path : MonoBehaviour
 {
 
 	public List<Vector3> waypoints = new List<Vector3> ();
-	public GameObject mothership = null;
+	public GameObject mothership = null; //gets mothership object
 	public int next = 0;
 	public bool looped = true;
-	//public int count;
-	//public Vector3 range;
-	public bool isRandom = true;
+	public bool isRandom = true; //check if a path is created randomly or rather has a gameobject path 
 
 	public void OnDrawGizmos ()
 	{
@@ -45,7 +43,7 @@ public class Path : MonoBehaviour
 	void Start ()
 	{
 		waypoints.Clear ();
-		if (isRandom) {
+		if (isRandom) { //make a random path around the mothership
 			int count = 10;
 			Vector3 range = mothership.GetComponent<Collider> ().bounds.size;
 			for (int i = 0; i < count; i++) {
@@ -56,16 +54,12 @@ public class Path : MonoBehaviour
 				waypoints.Add (mothership.transform.position + offset);
 			}
 		} else {
-			//add path from gameobject
+			//add path from gameobject..was added from inspector.. or can be referenced by script
+			//reads "KRpath"  game object
 			int count = transform.childCount;
 			for (int i = 0; i < count; i++) {
 				waypoints.Add (transform.GetChild (i).position);
 			}
-//			waypoints.Add (new Vector3 (300, 50, 0));
-//			waypoints.Add (new Vector3 (100, 50, 0));
-//			waypoints.Add (new Vector3 (0, 50, 0));
-//			waypoints.Add (new Vector3 (-80, 50, 0));
-//			waypoints.Add (new Vector3 (-100, 75, 0));
 		}
 	}
 

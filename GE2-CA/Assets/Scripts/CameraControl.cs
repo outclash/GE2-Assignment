@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Attached to Cameras parent gameobject 
+ * handles the cameras when to swicth
+*/
 public class CameraControl : MonoBehaviour
 {
 
@@ -11,6 +15,7 @@ public class CameraControl : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		//add cameras to a list
 		cameras.Clear ();
 		int count = transform.childCount;
 		for (int i = 0; i < count; i++) {
@@ -22,10 +27,10 @@ public class CameraControl : MonoBehaviour
 		}
 	}
 
+	//Activate next camera on list and disable previous one
 	public void nextCam ()
 	{
-
-		if (next > cameras.Count-1) {
+		if (next > cameras.Count-1) { //error check if last camera is active, stay at last camera
 			cameras [cameras.Count-1].SetActive (true); 
 		} else {
 			cameras [prev].SetActive (false);
@@ -35,9 +40,10 @@ public class CameraControl : MonoBehaviour
 		}
 	}
 
+	//Activate previous camera on list and disable current
 	public void prevCam ()
 	{			
-		if (prev == 0) {
+		if (prev == 0) { //error check if first camera is active, stay at first camera
 			cameras [prev].SetActive (true); 
 		} else {
 			prev--;
@@ -46,7 +52,7 @@ public class CameraControl : MonoBehaviour
 			cameras [next].SetActive (false);
 		}
 	}
-
+		
 	void Update ()
 	{
 		if (Input.GetKey ("o")) {

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Another enemy spawner mainly use for when K.russel scene
+*/
 public class EnemySpawner2 : MonoBehaviour {
 
 	public float leaders = 3;
@@ -29,7 +32,7 @@ public class EnemySpawner2 : MonoBehaviour {
 		Seek seek = leader.AddComponent<Seek> ();
 		seek.enabled = !seek.enabled;
 		Boid b = leader.GetComponent<Boid> ();
-		b.maxSpeed = 5;
+		b.maxSpeed = 6.5f;
 
 
 		for (int i = 1; i <= followers; i++) {
@@ -52,7 +55,7 @@ public class EnemySpawner2 : MonoBehaviour {
 		Seek seek = follower.AddComponent<Seek> ();
 		seek.enabled = !seek.enabled;
 		Boid b = follower.GetComponent<Boid> ();
-		b.maxSpeed = 5;
+		b.maxSpeed = 6.5f;
 
 	}
 		

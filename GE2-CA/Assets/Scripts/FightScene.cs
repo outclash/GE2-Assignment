@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * This is a small fight scene where some ships position are hard coded to make the scene
+ * Short scene that will show destroying enemy and plane consecutively 
+*/
 public class FightScene : MonoBehaviour
 {
-
 	public GameObject fsSpwn;
 	public GameObject av8prefab;
 	public GameObject enemyprefab;
@@ -21,8 +24,6 @@ public class FightScene : MonoBehaviour
 		foreach (Path p in gameObject.GetComponentsInChildren(typeof(Path))) {
 			paths.Add (p);
 		}
-
-
 		//Creates the enemy to get shot by
 		GameObject leader = GameObject.Instantiate<GameObject> (enemyprefab);
 		leader.transform.parent = this.transform;

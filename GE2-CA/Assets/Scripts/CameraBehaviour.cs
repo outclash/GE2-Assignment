@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Attached to each camera objects controls what does the camera do and view
+*/
 public class CameraBehaviour : MonoBehaviour
 {
 

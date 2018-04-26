@@ -122,6 +122,7 @@ public class Boid : MonoBehaviour
 			GameObject go = Instantiate(explosionPrefab,this.gameObject.transform.position,Quaternion.identity);
 			go.transform.localScale = new Vector3 (1, 1, 1);
 			Destroy (go, 3);
+			Destroy(other.gameObject);
 		}
 		if (this.gameObject.CompareTag("Missiles") && other.gameObject.CompareTag("Mothership")) {
 			Debug.Log ("explode");

@@ -9,13 +9,11 @@ public class EnemySpawner : MonoBehaviour {
 	public float gap = 10;
 	public float followers = 1;
 	public GameObject prefab;
-	//public GameObject mothership;
-	//private Vector3 mshipsize;
+
 	//Could create the list here and use at the AI script aswell
 	private void Awake ()
 	{
-		//mothership = GameObject.Find ("Mothership");
-	//	mshipsize = GetComponent<Collider> ().bounds.size;
+		//Creates enemy ship leader in random position
 		for (int i = 1; i <= leaders; i++) {
 			Vector3 rndPos = new Vector3 (Random.Range ((-leaders * gapL), (leaders * gapL)),0, Random.Range ((-leaders * gapL), (leaders * gapL)));
 			CreateLeaders (rndPos);
@@ -23,6 +21,7 @@ public class EnemySpawner : MonoBehaviour {
 
 	}
 
+	//Function to create leader ships
 	void CreateLeaders (Vector3 newpos)
 	{
 		GameObject leader = GameObject.Instantiate<GameObject> (prefab);
@@ -30,20 +29,15 @@ public class EnemySpawner : MonoBehaviour {
 		leader.transform.position = this.transform.TransformPoint (newpos);
 		leader.transform.rotation = this.transform.rotation;
 
-		//add components path,pathfollow,seek,arrive,obsavoidance,
-		//Wander w = leader.AddComponent<Wander>();
-		//Arrive arive = leader.AddComponent<Arrive> ();
-		//arive.targetPosition = leader.transform.position + leader.transform.forward * 100;
-		Seek seek = leader.AddComponent<Seek> ();
-		seek.enabled = !seek.enabled;
-		//Path path = leader.AddComponent<Path> ();
-		//path.mothership = mothership;
-		//FollowPath fpath = leader.AddComponent<FollowPath> ();
-		//fpath.path = path;
-		//fpath.enabled = !fpath.enabled;
+		//add steering behaviours
+		Wander w = leader.AddComponent<Wander>();
+		Seek seek = leader.AddComponent<Seek> (); 
+		seek.enabled = !seek.enabled; //disable seek behaviour
 		ObstacleAvoidance obavd = leader.AddComponent<ObstacleAvoidance> ();
-
-
+		//Change speed of boid
+		Boid b = leader.GetComponent<Boid> ();
+		b.maxSpeed = 2;
+		//Create followers of leader
 		for (int i = 1; i <= followers; i++) {
 			Vector3 offset = new Vector3 (gap * i, 0, -gap * i);
 			CreateFollower (offset, leader.GetComponent<Boid> ());
@@ -51,7 +45,7 @@ public class EnemySpawner : MonoBehaviour {
 			CreateFollower (offset, leader.GetComponent<Boid> ());            
 		}
 	}
-
+	//Function to create followers
 	void CreateFollower (Vector3 offset, Boid leader)
 	{
 		GameObject follower = GameObject.Instantiate<GameObject> (prefab);
@@ -59,19 +53,12 @@ public class EnemySpawner : MonoBehaviour {
 		follower.transform.parent = this.transform;
 		follower.transform.rotation = this.transform.rotation;
 
-		//Wander w = follower.AddComponent<Wander>();
-		//OffsetPursue op = follower.AddComponent<OffsetPursue> ();
-		//op.leader = leader;
+		//add steering behaviours
+		Wander w = follower.AddComponent<Wander>();
 		Seek seek = follower.AddComponent<Seek> ();
 		seek.enabled = !seek.enabled;
-
 		ObstacleAvoidance obavd = follower.AddComponent<ObstacleAvoidance> ();
-
-	}
-		
-	// Update is called once per frame
-	void Update ()
-	{
-
+		Boid b = follower.GetComponent<Boid> ();
+		b.maxSpeed = 2;
 	}
 }

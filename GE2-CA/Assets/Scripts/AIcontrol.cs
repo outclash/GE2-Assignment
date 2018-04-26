@@ -22,7 +22,12 @@ public class AIcontrol : MonoBehaviour
 
 	void Start ()
 	{
-		krussel = GameObject.Find ("K.Russel(Clone)");
+		krussel = GameObject.Find ("K.Russel(Clone)"); //find krussel plane 
+		// Deactive other objects that are not needed yet
+		mothership.transform.GetChild(0).gameObject.SetActive(false);
+		fsSpwn.SetActive(false);
+		emspwn2.SetActive(false);
+		krussel.SetActive (false);
 		//clear all list
 		av8s.Clear ();
 		enemies.Clear ();
@@ -59,20 +64,15 @@ public class AIcontrol : MonoBehaviour
 		camsBehavior[4].offset = camsBehavior[4].transform.position - krussel.transform.position;
 		camsBehavior [6].target = krussel; 
 		camsBehavior [0].option = 2; //make camera 1 lookAt av8 plane
-		// Deactive other objects that are not needed yet
-		mothership.transform.GetChild(0).gameObject.SetActive(false);
-		fsSpwn.SetActive(false);
-		emspwn2.SetActive(false);
-		krussel.SetActive (false);
+
 		StartCoroutine (FireMissiles ());
-		Debug.Log ("ab8count: " + av8s.Count);
 	}
 
 	public IEnumerator FireMissiles ()
 	{
 		yield return new WaitForSeconds (10);
 		StartCoroutine (Pathfollow ());
-
+		//Fire missiles for each av8 planes
 		for (int i = 0; i < av8s.Count; i++) {
 			for (int j = 0; j < av8s [i].transform.Find ("Bombs").transform.childCount; j++) { //fire first 2 missilbe of each av8
 				av8s [i].transform.Find ("Bombs").GetChild (j).gameObject.GetComponent<Seek> ().enabled = enabled;
@@ -81,7 +81,7 @@ public class AIcontrol : MonoBehaviour
 
 			}
 		}
-		Debug.Log ("Missiles Fired!");
+		//Debug.Log ("Missiles Fired!");
 		yield break;
 	}
 
@@ -92,7 +92,7 @@ public class AIcontrol : MonoBehaviour
 		yield return new WaitForSeconds (5);
 		camCon.nextCam (); //goes to the next camera view
 		yield return new WaitForSeconds (10);
-		camsBehavior [1].option = 1;
+		camsBehavior [1].option = 1; //make camera 2 to lookAt target
 
 		//for loop to set av8s and enemies
 		//must have both equal numbers of ship count
@@ -110,12 +110,13 @@ public class AIcontrol : MonoBehaviour
 			av8s[i].GetComponent<ObstacleAvoidance> ().enabled = enabled;
 			av8s[i].GetComponent<Boid> ().maxSpeed = 25;
 			//disable previous behaviour of enemies
-			//		es.GetComponent<Wander>().enabled = !enabled;
+			enemies[i].GetComponent<Wander>().enabled = !enabled;
 			//make seek script of enemies to follow each one of av8 planes
 			Seek sk = enemies[i].GetComponent<Seek>();
 			sk.targetGameObject = av8s[i];
 			sk.enabled = enabled;
 			enemies[i].GetComponent<FireBullets>().Startfiring();
+			enemies[i].GetComponent<Boid> ().maxSpeed = 20;
 		}
 		yield return new WaitForSeconds (3);
 		camCon.prevCam ();
@@ -133,7 +134,7 @@ public class AIcontrol : MonoBehaviour
 		fsSpwn.SetActive (false); //disable fight scene afterwards
 		camCon.nextCam ();
 		yield return new WaitForSeconds (5);
-		mothership.transform.GetChild(0).gameObject.SetActive(true);
+		mothership.transform.GetChild(0).gameObject.SetActive(true); //shows the mother ship final attack
 		camsBehavior [3].option = 1; //make the camera lerp to the mothership final attack
 		yield return new WaitForSeconds (5);
 		StartCoroutine (KRscene ());
@@ -142,22 +143,23 @@ public class AIcontrol : MonoBehaviour
 
 	public IEnumerator KRscene (){
 		camCon.nextCam (); //goes to the next camera view
-		camsBehavior[4].option = 3;
+		camsBehavior[4].option = 3; //camera follows or move
 		krussel.SetActive (true); //show k russel plane
-		emspwn2.SetActive (true); //show enemies spawner 2 
+		emspwn2.SetActive (true); //show enemies spawner 2 which will seek krussel
 		yield return new WaitForSeconds (5);
 		camCon.nextCam ();
 		yield return new WaitForSeconds (10);
 		camCon.nextCam ();
 		camsBehavior [6].option = 2; //make the camera look at k russel
-		yield return new WaitForSeconds (5);
+		StartCoroutine(EndScene());
+		yield break;
+	}
+
+	public IEnumerator EndScene (){
+		while (Vector3.Distance (krussel.transform.position, new Vector3 (-80, 50, 0)) > 20) { yield return null; }
+		yield return new WaitForSeconds (3);
 		//load end scene
 		SceneManager.LoadScene (1);
 		yield break;
-	}
-	// Update is called once per frame
-	void Update ()
-	{
-
 	}
 }

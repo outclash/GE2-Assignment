@@ -17,21 +17,21 @@ public class Av8Spawner : MonoBehaviour
 
 	private void Awake ()
 	{
+		//find mothership reference gameobject
 		mothership = GameObject.Find ("Mothership");
-		mshipsize = mothership.GetComponent<Collider> ().bounds.size;
+		mshipsize = mothership.GetComponent<Collider> ().bounds.size; //get size of mothership.. use for making random missile target
+		//create av8 leaders
 		for (int i = 1; i <= leaders; i++) {
 			Vector3 rndPos = new Vector3 (Random.Range ((-leaders * gapL), (leaders * gapL)), Random.Range ((-leaders * gapL), (leaders * gapL)), 0);
 			CreateLeaders (rndPos);
 		}
 
-		//Create K.Russel plane
+		//Create K.Russel plane.. use for last scene 
 		GameObject leader = GameObject.Instantiate<GameObject> (krprefab);
 		leader.transform.position = this.transform.TransformPoint (new Vector3(0,-50,0));
 		leader.transform.rotation = this.transform.rotation;
-
-		//add components path,pathfollow,obsavoidance,
-		//Path path = leader.AddComponent<Path> ();
-		//path.isRandom = false;
+		//add steering behaviours
+		//Follows a static path gameobject
 		FollowPath fpath = leader.AddComponent<FollowPath> ();
 		fpath.path = GameObject.Find("KRpath").GetComponent<Path>();
 		fpath.enabled = fpath.enabled;
@@ -55,6 +55,7 @@ public class Av8Spawner : MonoBehaviour
 //		}
 	}
 
+	//Function to create leader
 	void CreateLeaders (Vector3 newpos)
 	{
 		GameObject leader = GameObject.Instantiate<GameObject> (prefab);
@@ -62,9 +63,9 @@ public class Av8Spawner : MonoBehaviour
 		leader.transform.position = this.transform.TransformPoint (newpos);
 		leader.transform.rotation = this.transform.rotation;
 
-		//add components path,pathfollow,seek,arrive,obsavoidance,
+		//add steering behaviours
 		Arrive arive = leader.AddComponent<Arrive> ();
-		arive.targetPosition = leader.transform.position + leader.transform.forward * 100;
+		arive.targetPosition = leader.transform.position + leader.transform.forward * 100; //add target position to arrive there
 		Seek seek = leader.AddComponent<Seek> ();
 		seek.enabled = !seek.enabled;
 		Path path = leader.AddComponent<Path> ();
@@ -86,7 +87,7 @@ public class Av8Spawner : MonoBehaviour
 			sb.enabled = !sb.enabled;
 		}
 			
-
+		//Create followers
 		for (int i = 1; i <= followers; i++) {
 			Vector3 offset = new Vector3 (gap * i, 0, -gap * i);
 			CreateFollower (offset, leader.GetComponent<Boid> ());
@@ -95,6 +96,7 @@ public class Av8Spawner : MonoBehaviour
 		}
 	}
 
+	//Method to create Follwers
 	void CreateFollower (Vector3 offset, Boid leader)
 	{
 		GameObject follower = GameObject.Instantiate<GameObject> (prefab);
@@ -102,7 +104,7 @@ public class Av8Spawner : MonoBehaviour
 		follower.transform.parent = this.transform;
 		follower.transform.rotation = this.transform.rotation;
 		follower.name = "follower";
-
+		//add steering behaviours
 		OffsetPursue op = follower.AddComponent<OffsetPursue> ();
 		op.leader = leader;
 		Seek seek = follower.AddComponent<Seek> ();
